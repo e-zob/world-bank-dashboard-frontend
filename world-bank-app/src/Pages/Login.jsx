@@ -4,7 +4,7 @@ import { postUserLogin } from "./LoginNetworking";
 
 export default function Login() {
   return (
-    <div login-form-wrapper>
+    <div>
       <LoginForm userLogin={postUserLogin} />
     </div>
   );
