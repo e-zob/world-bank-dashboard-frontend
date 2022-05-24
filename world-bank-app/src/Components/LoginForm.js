@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import { useState } from "react";
 
 export default function LoginForm(props) {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
