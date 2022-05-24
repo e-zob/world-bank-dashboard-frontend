@@ -1,6 +1,8 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Stack from "react-bootstrap/Stack";
+import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function LoginForm(props) {
@@ -13,7 +15,7 @@ export default function LoginForm(props) {
     if (result.status !== 200) {
       await updateError(result.response);
     } else {
-      //navigate to the search page
+      <Navigate to="/search"> </Navigate>;
     }
   }
   async function updateError(error) {
@@ -23,12 +25,13 @@ export default function LoginForm(props) {
   return (
     <Container>
       <Form>
-        <h1>Login!</h1>
+        <h1> World Bank Dashboard</h1>
+        <h2>Login</h2>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Username</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="Enter email"
+            type="username"
+            placeholder="Enter username"
             onChange={(e) => setUsername(e.target.value)}
           />
           <Form.Text className="text-muted"></Form.Text>
@@ -41,10 +44,18 @@ export default function LoginForm(props) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-        {error ? { error } : null}
+        <Stack direction="horizontal" gap={3}>
+          <Link to="/create-account">
+            {" "}
+            <Button variant="primary" type="submit">
+              Create Account
+            </Button>
+          </Link>
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
+            Submit
+          </Button>
+          {error ? { error } : null}
+        </Stack>
       </Form>
     </Container>
   );
