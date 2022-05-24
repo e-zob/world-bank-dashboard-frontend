@@ -1,5 +1,9 @@
 import { Button, Form, Container } from "react-bootstrap";
+import { useState } from "react";
 export default function CreateAccount() {
+  const [createUsername, setCreateUsername] = useState("");
+  const [createPassword, setCreatePassword] = useState("");
+
   return (
     <Container>
       <h1>World Bank Dashboard</h1>
