@@ -2,20 +2,31 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
+import Alert from "react-bootstrap/Alert";
 import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function LoginForm(props) {
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleSubmit() {
-    const result = props.userLogin(username, password, "sessions");
-    if (result.status !== 200) {
-      await updateError(result.response);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (username === "" && password === "") {
+      await updateError("Please enter a username and password");
+    } else if (username === "") {
+      await updateError("Please enter a username");
+    } else if (password === "") {
+      await updateError("Please enter a password");
     } else {
-      <Navigate to="/search"> </Navigate>;
+      const result = props.userLogin(username, password, "sessions");
+      if (result.status !== 200) {
+        await updateError(result.response);
+      } else {
+        <Navigate to="/search"> </Navigate>;
+      }
     }
   }
   async function updateError(error) {
@@ -32,7 +43,10 @@ export default function LoginForm(props) {
           <Form.Control
             type="username"
             placeholder="Enter username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setError("");
+              setUsername(e.target.value);
+            }}
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
@@ -41,7 +55,10 @@ export default function LoginForm(props) {
           <Form.Control
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setError("");
+              setPassword(e.target.value);
+            }}
           />
         </Form.Group>
         <Stack direction="horizontal" gap={3}>
@@ -54,7 +71,12 @@ export default function LoginForm(props) {
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             Submit
           </Button>
-          {error ? { error } : null}
+          {error ? (
+            <Alert key="danger" variant="danger">
+              {" "}
+              {error}{" "}
+            </Alert>
+          ) : null}
         </Stack>
       </Form>
     </Container>

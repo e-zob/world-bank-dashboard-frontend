@@ -4,8 +4,10 @@ import { postUserInfo } from "./LoginNetworking";
 
 export default function Login() {
   return (
-    <div login-form-wrapper>
+
+    <div class = "login-form-wrapper" >
       <LoginForm userLogin={postUserInfo} />
+
     </div>
   );
 }
