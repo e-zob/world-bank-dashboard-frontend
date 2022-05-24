@@ -32,11 +32,12 @@ export default function CreateAccountForm(props) {
           <Form.Control
             type="username"
             placeholder="Enter Username"
-            onChange={(e) =>
+            onChange={(e) => {
               e.target.value === ""
                 ? setErrUsername("Empty Username!")
-                : setCreateUsername(e.target.value)
-            }
+                : setErrUsername(false);
+              setCreateUsername(e.target.value);
+            }}
           />
         </Form.Group>
 
@@ -53,11 +54,12 @@ export default function CreateAccountForm(props) {
           <Form.Control
             type="password"
             placeholder="Confirm your password"
-            onChange={(e) =>
+            onChange={(e) => {
+              e.preventDefault();
               e.target.value === createPassword
                 ? setErrPass(false)
-                : setErrPass("Password doesn't match!")
-            }
+                : setErrPass("Password doesn't match!");
+            }}
           />
         </Form.Group>
         {errPass ? getErrMessage(errPass) : null}
