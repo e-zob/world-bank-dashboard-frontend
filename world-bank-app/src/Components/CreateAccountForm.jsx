@@ -9,7 +9,7 @@ export default function CreateAccountForm(props) {
   const [errUsername, setErrUsername] = useState(false);
 
   async function handleSubmit() {
-    const result = props.userInfo(createUsername, createPassword, "users");
+    const result = props.createUser(createUsername, createPassword, "users");
     if (result.status !== 200) {
       setErrUsername(result.response);
     } else {
