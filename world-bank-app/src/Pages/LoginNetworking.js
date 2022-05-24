@@ -1,5 +1,5 @@
-export async function postUserLogin(username, password) {
-  const response = await fetch("http://localhost:8080/sessions", {
+export async function postUserInfo(username, password, urlPath) {
+  const response = await fetch(`http://localhost:8080/${urlPath}`, {
     method: "POST",
     credentials: "include",
     headers: {

@@ -9,7 +9,7 @@ export default function LoginForm(props) {
   const [password, setPassword] = useState("");
 
   async function handleSubmit() {
-    const result = props.userLogin(username, password);
+    const result = props.userLogin(username, password, "sessions");
     if (result.status !== 200) {
       await updateError(result.response);
     } else {
