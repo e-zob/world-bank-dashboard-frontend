@@ -8,13 +8,16 @@ export default function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const result = props.userLogin(username, password);
-    if (result === 400) {
-      setError(true);
+    if (result.status !== 200) {
+      await updateError(result.response);
     } else {
       //navigate to the search page
     }
+  }
+  async function updateError(error) {
+    setError(error);
   }
 
   return (
@@ -41,7 +44,7 @@ export default function LoginForm(props) {
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
-        {error ? <h3>Wrong password</h3> : null}
+        {error ? { error } : null}
       </Form>
     </Container>
   );
