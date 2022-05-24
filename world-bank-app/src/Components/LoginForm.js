@@ -11,6 +11,7 @@ export default function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (username === "" && password === "") {
@@ -20,7 +21,7 @@ export default function LoginForm(props) {
     } else if (password === "") {
       await updateError("Please enter a password");
     } else {
-      const result = props.userLogin(username, password);
+      const result = props.userLogin(username, password, "sessions");
       if (result.status !== 200) {
         await updateError(result.response);
       } else {
