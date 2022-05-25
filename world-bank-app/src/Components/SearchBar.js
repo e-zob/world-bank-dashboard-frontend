@@ -38,6 +38,7 @@ export default function SearchBar(props) {
 
   return (
     <Container>
+      <h2>Search</h2>
       <Form>
         <Row gap={3}>
           <Col className="justify-content-md-center">
