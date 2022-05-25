@@ -1,9 +1,9 @@
 import SearchBar from "../Components/SearchBar";
-
+import { postSearchData } from "../Networking/SearchNetworking";
 export default function Search() {
   return (
     <div>
-      <SearchBar />
+      <SearchBar postSearchData={postSearchData} />
     </div>
   );
 }

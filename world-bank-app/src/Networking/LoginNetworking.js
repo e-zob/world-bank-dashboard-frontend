@@ -10,8 +10,8 @@ export async function postUserInfo(username, password, urlPath) {
       password: password,
     }),
   });
-  const json = response.json();
-  return json;
+
+  return response;
 }
 
 export async function logUserOut() {
@@ -21,8 +21,7 @@ export async function logUserOut() {
       "Content-Type": "application/json",
     },
   });
-  const json = response.json();
-  return json;
+  return response;
 }
 
 export async function deleteUserInfo(username) {
@@ -35,6 +34,5 @@ export async function deleteUserInfo(username) {
       username: username,
     }),
   });
-  const json = response.json();
-  return json;
+  return response;
 }

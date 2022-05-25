@@ -3,14 +3,14 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
 import Alert from "react-bootstrap/Alert";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function LoginForm(props) {
+  let navigate = useNavigate();
   const [error, setError] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,14 +21,15 @@ export default function LoginForm(props) {
     } else if (password === "") {
       await updateError("Please enter a password");
     } else {
-      const result = props.userLogin(username, password, "sessions");
-      if (result.status !== 200) {
-        await updateError(result.response);
+      const result = await props.userLogin(username, password, "sessions");
+      if (result.status === 200) {
+        navigate("/search");
       } else {
-        <Navigate to="/search"> </Navigate>;
+        await updateError(result.response);
       }
     }
   }
+
   async function updateError(error) {
     setError(error);
   }
