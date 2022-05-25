@@ -64,7 +64,7 @@ export default function CreateAccountForm(props) {
         </Form.Group>
         {errPass ? getErrMessage(errPass) : null}
         {errUsername ? getErrMessage(errUsername) : null}
-        <div class="d-flex justify-content-between">
+        <div className="d-flex justify-content-between">
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             Create Account
           </Button>
