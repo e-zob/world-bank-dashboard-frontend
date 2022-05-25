@@ -1,11 +1,10 @@
 import SearchBar from "../Components/SearchBar";
-import Header from "../Components/Header";
 
+import { postSearchData } from "../Networking/SearchNetworking";
 export default function Search() {
   return (
     <div>
-      <Header />
-      <SearchBar />
+      <SearchBar postSearchData={postSearchData} />
     </div>
   );
 }
