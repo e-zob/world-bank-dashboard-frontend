@@ -10,6 +10,6 @@ export async function postUserInfo(username, password, urlPath) {
       password: password,
     }),
   });
-  const json = response.json();
-  return json;
+
+  return response;
 }

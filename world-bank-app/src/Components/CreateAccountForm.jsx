@@ -1,19 +1,20 @@
-import { Button, Form, Container, Alert } from "react-bootstrap";
+import { Button, Form, Container, Alert, Navbar } from "react-bootstrap";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateAccountForm(props) {
   const [createUsername, setCreateUsername] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [errPass, setErrPass] = useState(false);
   const [errUsername, setErrUsername] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit() {
     const result = props.createUser(createUsername, createPassword, "users");
-    if (result.status !== 200) {
-      setErrUsername(result.response);
+    if (result.status === 200) {
+      navigate("/");
     } else {
-      <Navigate to="/" />;
+      setErrUsername(result.response);
     }
   }
   function getErrMessage(err) {
@@ -40,7 +41,6 @@ export default function CreateAccountForm(props) {
             }}
           />
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -64,9 +64,21 @@ export default function CreateAccountForm(props) {
         </Form.Group>
         {errPass ? getErrMessage(errPass) : null}
         {errUsername ? getErrMessage(errUsername) : null}
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Create Account
-        </Button>
+        <div class="d-flex justify-content-between">
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
+            Create Account
+          </Button>
+
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Log In
+          </Button>
+        </div>
       </Form>
     </Container>
   );

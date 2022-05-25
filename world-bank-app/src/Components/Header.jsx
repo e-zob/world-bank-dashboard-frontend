@@ -5,11 +5,11 @@ export default function Header() {
     <Navbar>
       <Container>
         <Navbar.Brand>World Bank</Navbar.Brand>
-        <Nav.Link href="#search">Search</Nav.Link>
-        <Nav.Link href="#history">History</Nav.Link>
+        <Nav.Link href="/search">Search</Nav.Link>
+        <Nav.Link href="/user-history">History</Nav.Link>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Nav.Link href="#log-out">Log Out</Nav.Link>
+          <Nav.Link href="">Log Out</Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
