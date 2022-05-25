@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
-
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function displayYearRange(start, end) {
@@ -18,29 +18,65 @@ function displayYearRange(start, end) {
   return yearsOptions;
 }
 
-export default function SearchBar() {
+export default function SearchBar(props) {
+  let navigate = useNavigate();
   const [openCountry, setOpenCountry] = useState(false);
+
+  const [country, setCountry] = useState([]);
+  const [indicator, setIndicator] = useState();
+  const [years, setYears] = useState([]);
+
+  const [results, setResults] = useState();
+
+  async function handleSearch(e) {
+    e.preventDefault();
+    const result = await props.postSearchData(country, years, indicator);
+    if (result.status === 200) {
+      navigate("/results");
+    }
+  }
+
   return (
     <Container>
       <h2>Search</h2>
       <Form>
         <Row gap={3}>
           <Col className="justify-content-md-center">
-            <Form.Control placeholder="Enter a country name..." />
+            <Form.Control
+              onChange={(e) => {
+                setCountry((country) => [...country, e.target.value]);
+              }}
+              placeholder="Enter a country name..."
+            />
           </Col>
           <Col>
-            <Form.Control placeholder="Enter an indicator..." />
+            <Form.Control
+              onChange={(e) => setIndicator(e.target.value)}
+              placeholder="Enter an indicator..."
+            />
           </Col>
 
           <Col>
-            <Form.Select size="sm" aria-label="Default select example">
+            <Form.Select
+              onChange={(e) => {
+                setYears((years) => [...years, e.target.value]);
+              }}
+              size="sm"
+              aria-label="Default select example"
+            >
               <option>select start year</option>
               <option>null</option>
               {displayYearRange(1950, 2016)}
             </Form.Select>
           </Col>
           <Col>
-            <Form.Select size="sm" aria-label="Default select example">
+            <Form.Select
+              onChange={(e) => {
+                setYears((years) => [...years, e.target.value]);
+              }}
+              size="sm"
+              aria-label="Default select example"
+            >
               <option>select end year</option>
               <option>null</option>
               {displayYearRange(1950, 2016)}
@@ -57,13 +93,23 @@ export default function SearchBar() {
               +
             </Button>
             <Collapse in={openCountry}>
-              <Form.Control placeholder="Enter a country name..." />
+              <Form.Control
+                onChange={(e) => {
+                  setCountry((country) => [...country, e.target.value]);
+                }}
+                placeholder="Enter a country name..."
+              />
             </Collapse>
           </Col>
         </Row>
         <Row>
           <Col md={{ span: 3, offset: 10 }}>
-            <Button variant="primary" size="lg">
+            <Button
+              onClick={handleSearch}
+              type="submit"
+              variant="primary"
+              size="lg"
+            >
               Search
             </Button>
           </Col>

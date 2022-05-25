@@ -4,7 +4,9 @@ import "./App.css";
 import Login from "./Pages/Login";
 import CreateAccount from "./Pages/CreateAccount";
 import Search from "./Pages/Search";
+
 import UserHistory from "./Pages/UserHistory";
+import Results from "./Pages/Results";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -15,6 +17,7 @@ function App() {
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/search" element={<Search />} />
         <Route path="/user-history" element={<UserHistory />} />
+        <Route path="/results" element={<Results />} />
       </Routes>
     </Router>
   );
