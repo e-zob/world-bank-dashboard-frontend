@@ -22,6 +22,7 @@ export default function SearchBar() {
   const [openCountry, setOpenCountry] = useState(false);
   return (
     <Container>
+      <h2>Search</h2>
       <Form>
         <Row gap={3}>
           <Col className="justify-content-md-center">
