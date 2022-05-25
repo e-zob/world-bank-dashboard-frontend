@@ -4,8 +4,8 @@ import "./App.css";
 import Login from "./Pages/Login";
 import CreateAccount from "./Pages/CreateAccount";
 import Search from "./Pages/Search";
-import UserHistory from "./Pages/UserHistory";
 
+import UserHistory from "./Pages/UserHistory";
 import Results from "./Pages/Results";
 import "bootstrap/dist/css/bootstrap.min.css";
 
