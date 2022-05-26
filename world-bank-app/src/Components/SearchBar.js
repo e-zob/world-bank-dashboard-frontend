@@ -46,9 +46,9 @@ export default function SearchBar(props) {
     e.preventDefault();
     console.log(countries, indicator, years);
     const result = await props.postSearchData(countries, indicator, years);
-    // if (result.status === 200) {
-    //   navigate("/results");
-    // }
+    if (result.status === 200) {
+      navigate("/results");
+    }
   }
   console.log(countries, indicator, years);
   return (
