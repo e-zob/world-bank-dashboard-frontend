@@ -7,9 +7,7 @@ export default function Search() {
   return (
     <div>
       <Header />
-      <Container>
-        <SearchBar />
-      </Container>
+
       <SearchBar postSearchData={postSearchData} />
     </div>
   );
