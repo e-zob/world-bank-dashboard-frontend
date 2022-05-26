@@ -17,6 +17,7 @@ export async function postUserInfo(username, password, urlPath) {
 export async function logUserOut() {
   const response = await fetch(`http://localhost:8080/sessions`, {
     method: "DELETE",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
