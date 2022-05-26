@@ -18,7 +18,6 @@ function displayYearRange(start, end) {
   });
   return yearsOptions;
 }
-
 export default function SearchBar(props) {
   let navigate = useNavigate();
   const [openCountry, setOpenCountry] = useState(false);
@@ -32,6 +31,7 @@ export default function SearchBar(props) {
   const [error, setError] = useState("");
 
   async function handleSearch(e) {
+    e.preventDefault();
     setCountries((countries) => [...countries, countryOne]);
     if (countryTwo !== "") {
       setCountries((countries) => [...countries, countryTwo]);
@@ -42,12 +42,13 @@ export default function SearchBar(props) {
     }
     if (countryOne === "") {
       setError("Please enter a country");
-    }
-    e.preventDefault();
-    console.log(countries, indicator, years);
-    const result = await props.postSearchData(countries, indicator, years);
-    if (result.status === 200) {
-      navigate("/results");
+    } else {
+      console.log(countries, indicator, years);
+      const result = await props.postSearchData(countries, indicator, years);
+      console.log(result.status);
+      if (result.status === 200) {
+        navigate("/results");
+      }
     }
   }
   console.log(countries, indicator, years);
