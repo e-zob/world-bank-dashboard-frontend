@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
+import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -17,25 +18,39 @@ function displayYearRange(start, end) {
   });
   return yearsOptions;
 }
-
 export default function SearchBar(props) {
   let navigate = useNavigate();
   const [openCountry, setOpenCountry] = useState(false);
-
-  const [country, setCountry] = useState([]);
-  const [indicator, setIndicator] = useState();
+  const [countryOne, setCountryOne] = useState("");
+  const [countryTwo, setCountryTwo] = useState("");
+  const [yearOne, setYearOne] = useState(0);
+  const [yearTwo, setYearTwo] = useState(0);
+  const [indicator, setIndicator] = useState("");
+  const [countries, setCountries] = useState([]);
   const [years, setYears] = useState([]);
-
-  const [results, setResults] = useState();
+  const [error, setError] = useState("");
 
   async function handleSearch(e) {
     e.preventDefault();
-    const result = await props.postSearchData(country, years, indicator);
-    if (result.status === 200) {
-      navigate("/results");
+    setCountries((countries) => [...countries, countryOne]);
+    if (countryTwo !== "") {
+      setCountries((countries) => [...countries, countryTwo]);
+    }
+    setYears((years) => [...years, yearOne]);
+    if (yearTwo !== 0) {
+      setYears((years) => [...years, yearTwo]);
+    }
+    if (countryOne === "") {
+      setError("Please enter a country");
+    } else {
+      const result = await props.postSearchData(countries, indicator, years);
+
+      if (result.status === 200) {
+        navigate("/results");
+      }
     }
   }
-
+  console.log(countries, indicator, years);
   return (
     <Container>
       <h2>Search</h2>
@@ -44,7 +59,8 @@ export default function SearchBar(props) {
           <Col className="justify-content-md-center">
             <Form.Control
               onChange={(e) => {
-                setCountry((country) => [...country, e.target.value]);
+                setError("");
+                setCountryOne(e.target.value);
               }}
               placeholder="Enter a country name..."
             />
@@ -59,7 +75,7 @@ export default function SearchBar(props) {
           <Col>
             <Form.Select
               onChange={(e) => {
-                setYears((years) => [...years, e.target.value]);
+                setYearOne(e.target.value);
               }}
               size="sm"
               aria-label="Default select example"
@@ -72,7 +88,7 @@ export default function SearchBar(props) {
           <Col>
             <Form.Select
               onChange={(e) => {
-                setYears((years) => [...years, e.target.value]);
+                setYearTwo(e.target.value);
               }}
               size="sm"
               aria-label="Default select example"
@@ -95,7 +111,7 @@ export default function SearchBar(props) {
             <Collapse in={openCountry}>
               <Form.Control
                 onChange={(e) => {
-                  setCountry((country) => [...country, e.target.value]);
+                  setCountryTwo(e.target.value);
                 }}
                 placeholder="Enter a country name..."
               />
@@ -114,6 +130,12 @@ export default function SearchBar(props) {
             </Button>
           </Col>
         </Row>
+        {error ? (
+          <Alert key="danger" variant="danger">
+            {" "}
+            {error}{" "}
+          </Alert>
+        ) : null}
       </Form>
     </Container>
   );
