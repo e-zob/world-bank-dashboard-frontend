@@ -43,9 +43,8 @@ export default function SearchBar(props) {
     if (countryOne === "") {
       setError("Please enter a country");
     } else {
-      console.log(countries, indicator, years);
       const result = await props.postSearchData(countries, indicator, years);
-      console.log(result.status);
+
       if (result.status === 200) {
         navigate("/results");
       }
