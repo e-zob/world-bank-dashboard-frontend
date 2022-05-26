@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 
 export default function UserHistory() {
   const [searches, setSearches] = useState([]);
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     historyData();
@@ -25,6 +26,7 @@ export default function UserHistory() {
         indicator={search.indicator}
         year={search.year}
         createdAt={search.createdAt}
+        admin={admin}
       />
     ));
   }
