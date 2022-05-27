@@ -15,7 +15,12 @@ export async function postSearchData(countries, years, indicator) {
 }
 
 export async function getAutocompleteOptions() {
-  const result = await fetch(`${process.env.REACT_APP_API_URL}/autocomplete`);
+  const result = await fetch(`${process.env.REACT_APP_API_URL}/autocomplete`, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   const data = await result.json();
   return data.response;
 }

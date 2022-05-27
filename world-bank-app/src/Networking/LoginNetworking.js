@@ -28,6 +28,7 @@ export async function logUserOut() {
 export async function deleteUserInfo(username) {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
     method: "DELETE",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
