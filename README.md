@@ -13,7 +13,7 @@ Postgres https://www.postgresql.org/
 
 # How it works
 Search page:
-Search for one or two countries;
+Search for one country;
 If no date range is selected, the indicators will show for all of the years available for that country.
 
 
