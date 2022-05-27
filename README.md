@@ -19,7 +19,7 @@ If no date range is selected, the indicators will show for all of the years avai
 
 How to run the project
 
-In order to view the project visit the link:
+In order to view the project visit the link:https://wb-dashboard-sigma-labs.netlify.app/
 
 Code to ignore:
 The delete user info is for the tests in order to check if a user has logged in.
