@@ -6,7 +6,9 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
+import Select from "react-select";
+import { getAutocompleteOptions } from "../Networking/SearchNetworking";
 
 function displayYearRange(start, end) {
   let years = [];
@@ -18,6 +20,7 @@ function displayYearRange(start, end) {
   });
   return yearsOptions;
 }
+
 export default function SearchBar(props) {
   let navigate = useNavigate();
   const [openCountry, setOpenCountry] = useState(false);
@@ -29,6 +32,27 @@ export default function SearchBar(props) {
   const [countries, setCountries] = useState([]);
   const [years, setYears] = useState([]);
   const [error, setError] = useState("");
+  const [countryOptions, setCountryOptions] = useState([]);
+  const [indicatorOptions, setIndicatorOptions] = useState([]);
+
+  useLayoutEffect(() => {
+    return async () => {
+      setOptions();
+    };
+  }, []);
+
+  async function setOptions() {
+    let options = await getAutocompleteOptions();
+    const allCountryOptions = options["countries"]
+      .map((names) => [
+        { value: names["shortname"], label: names["shortname"] },
+        { value: names["longname"], label: names["longname"] },
+      ])
+      .flat();
+    const allIndicatorOptions = options["indicators"].map((indicator) => [{ value: indicator["indicatorname"], label: indicator["indicatorname"] }]).flat();
+    setCountryOptions(allCountryOptions);
+    setIndicatorOptions(allIndicatorOptions);
+  }
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -51,24 +75,44 @@ export default function SearchBar(props) {
     }
   }
 
+  function handleChange(e) {
+    setCountryOne(e.value);
+  }
+
+  function handleIndicatorChange(e) {
+    setIndicator(e.value);
+  }
+
+  function handleCountryTwoChange(e) {
+    setCountryTwo(e.value);
+  }
+  //console.log(countries, indicator, years);
+
   return (
     <Container>
       <h2>Search</h2>
       <Form>
         <Row gap={3}>
           <Col className="justify-content-md-center">
-            <Form.Control
-              onChange={(e) => {
-                setError("");
-                setCountryOne(e.target.value);
-              }}
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              options={countryOptions}
+              isClearable={true}
+              value={countryOptions.find((obj) => obj.value === countryOne)}
+              onInputChange={handleChange}
               placeholder="Enter a country name..."
             />
           </Col>
           <Col>
-            <Form.Control
-              onChange={(e) => setIndicator(e.target.value)}
-              placeholder="Enter an indicator..."
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              options={indicatorOptions}
+              isClearable={true}
+              value={indicatorOptions.find((obj) => obj.value === indicator)}
+              onInputChange={handleIndicatorChange}
+              placeholder="Enter a indicator..."
             />
           </Col>
 
@@ -101,18 +145,17 @@ export default function SearchBar(props) {
         </Row>
         <Row md={4} gap={3}>
           <Col>
-            <Button
-              onClick={() => setOpenCountry(!openCountry)}
-              aria-controls="example-collapse-text"
-              aria-expanded={openCountry}
-            >
+            <Button onClick={() => setOpenCountry(!openCountry)} aria-controls="example-collapse-text" aria-expanded={openCountry}>
               +
             </Button>
             <Collapse in={openCountry}>
-              <Form.Control
-                onChange={(e) => {
-                  setCountryTwo(e.target.value);
-                }}
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                options={countryOptions}
+                isClearable={true}
+                value={countryOptions.find((obj) => obj.value === countryTwo)}
+                onInputChange={handleCountryTwoChange}
                 placeholder="Enter a country name..."
               />
             </Collapse>
@@ -120,12 +163,7 @@ export default function SearchBar(props) {
         </Row>
         <Row>
           <Col md={{ span: 3, offset: 10 }}>
-            <Button
-              onClick={handleSearch}
-              type="submit"
-              variant="primary"
-              size="lg"
-            >
+            <Button onClick={handleSearch} type="submit" variant="primary" size="lg">
               Search
             </Button>
           </Col>
