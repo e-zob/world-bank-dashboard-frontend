@@ -2,20 +2,19 @@ import Header from "../Components/Header";
 import UserHistoryList from "../Components/UserHistoryList";
 import { Container, ListGroup } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
+import { fetchSearchData } from "../Networking/ResultsNetworking";
 
 export default function UserHistory() {
   const [searches, setSearches] = useState([]);
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    historyData();
+    async function fetchData() {
+      const result = await fetchSearchData("history");
+      setSearches(result.response);
+    }
+    fetchData();
   }, []);
-
-  async function historyData() {
-    const response = await fetch(`http://localhost:8080/history`);
-    const json = response.json();
-    setSearches(json);
-  }
 
   function getSearchesList(searches) {
     return searches.map((search, i) => (

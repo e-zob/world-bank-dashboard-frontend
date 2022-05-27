@@ -1,6 +1,7 @@
 export async function postSearchData(countries, years, indicator) {
   const response = await fetch(`http://localhost:8080/search`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

@@ -50,7 +50,7 @@ export default function SearchBar(props) {
       }
     }
   }
-  console.log(countries, indicator, years);
+
   return (
     <Container>
       <h2>Search</h2>
