@@ -38,7 +38,6 @@ export default function SearchBar(props) {
   useLayoutEffect(() => {
     return async () => {
       setOptions();
-      //console.log(countryOptions);
     };
   }, []);
 
@@ -79,6 +78,14 @@ export default function SearchBar(props) {
   function handleChange(e) {
     setCountryOne(e.value);
   }
+
+  function handleIndicatorChange(e) {
+    setIndicator(e.value);
+  }
+
+  function handleCountryTwoChange(e) {
+    setCountryTwo(e.value);
+  }
   //console.log(countries, indicator, years);
   return (
     <Container>
@@ -103,7 +110,7 @@ export default function SearchBar(props) {
               options={indicatorOptions}
               isClearable={true}
               value={indicatorOptions.find((obj) => obj.value === indicator)}
-              onInputChange={handleChange}
+              onInputChange={handleIndicatorChange}
               placeholder="Enter a indicator..."
             />
           </Col>
@@ -141,10 +148,13 @@ export default function SearchBar(props) {
               +
             </Button>
             <Collapse in={openCountry}>
-              <Form.Control
-                onChange={(e) => {
-                  setCountryTwo(e.target.value);
-                }}
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                options={countryOptions}
+                isClearable={true}
+                value={countryOptions.find((obj) => obj.value === countryTwo)}
+                onInputChange={handleCountryTwoChange}
                 placeholder="Enter a country name..."
               />
             </Collapse>
