@@ -1,5 +1,5 @@
 export async function postUserInfo(username, password, urlPath) {
-  const response = await fetch(`http://process.env.REACT_APP_API_URL/${urlPath}`, {
+  const response = await fetch(`https://process.env.REACT_APP_API_URL/${urlPath}`, {
     method: "POST",
     credentials: "include",
     headers: {
