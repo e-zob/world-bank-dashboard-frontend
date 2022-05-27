@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import Select from "react-select";
 import { getAutocompleteOptions } from "../Networking/SearchNetworking";
 
@@ -34,8 +34,9 @@ export default function SearchBar(props) {
   const [error, setError] = useState("");
   const [countryOptions, setCountryOptions] = useState([]);
   const [indicatorOptions, setIndicatorOptions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     return async () => {
       setOptions();
     };
@@ -54,37 +55,31 @@ export default function SearchBar(props) {
     setIndicatorOptions(allIndicatorOptions);
   }
 
+  function updateCountries(country) {
+    setCountries((countries) => [...countries, country]);
+  }
+
   async function handleSearch(e) {
     e.preventDefault();
-    setCountries((countries) => [...countries, countryOne]);
-    if (countryTwo !== "") {
-      setCountries((countries) => [...countries, countryTwo]);
-    }
-    setYears((years) => [...years, yearOne]);
-    if (yearTwo !== 0) {
-      setYears((years) => [...years, yearTwo]);
-    }
-    if (countryOne === "") {
-      setError("Please enter a country");
-    } else {
-      const result = await props.postSearchData(countries, indicator, years);
+    const result = await props.postSearchData(countries, years, indicator);
 
-      if (result.status === 200) {
-        navigate("/results");
-      }
+    if (result.status === 200) {
+      navigate("/results");
     }
   }
 
   function handleChange(e) {
-    setCountryOne(e.value);
+    setCountries([]);
+    updateCountries(e.value);
   }
 
   function handleIndicatorChange(e) {
+    console.log(e.value);
     setIndicator(e.value);
   }
 
   function handleCountryTwoChange(e) {
-    setCountryTwo(e.value);
+    updateCountries(e.value);
   }
   //console.log(countries, indicator, years);
 
@@ -99,8 +94,8 @@ export default function SearchBar(props) {
               classNamePrefix="select"
               options={countryOptions}
               isClearable={true}
-              value={countryOptions.find((obj) => obj.value === countryOne)}
-              onInputChange={handleChange}
+              //value={countryOptions.find((obj) => obj.value === countryOne)}
+              onChange={handleChange}
               placeholder="Enter a country name..."
             />
           </Col>
@@ -110,8 +105,8 @@ export default function SearchBar(props) {
               classNamePrefix="select"
               options={indicatorOptions}
               isClearable={true}
-              value={indicatorOptions.find((obj) => obj.value === indicator)}
-              onInputChange={handleIndicatorChange}
+              //value={indicatorOptions.find((obj) => obj.value === indicator)}
+              onChange={handleIndicatorChange}
               placeholder="Enter a indicator..."
             />
           </Col>
@@ -154,8 +149,8 @@ export default function SearchBar(props) {
                 classNamePrefix="select"
                 options={countryOptions}
                 isClearable={true}
-                value={countryOptions.find((obj) => obj.value === countryTwo)}
-                onInputChange={handleCountryTwoChange}
+                //value={countryOptions.find((obj) => obj.value === countryTwo)}
+                onChange={handleCountryTwoChange}
                 placeholder="Enter a country name..."
               />
             </Collapse>

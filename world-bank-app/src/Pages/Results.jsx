@@ -12,7 +12,7 @@ export default function Results() {
       await fetchData();
     }
     getData();
-  }, [data]);
+  }, []);
 
   async function fetchData() {
     const results = await fetchSearchData("search");
@@ -121,9 +121,7 @@ export default function Results() {
   return (
     <div style={{ height: 200 }}>
       <Header />
-      {newData ? (
-        <div style={{ height: 200 }}>{myResponsiveLine(newData)}</div>
-      ) : null}
+      {newData ? <div style={{ height: 200 }}>{myResponsiveLine(newData)}</div> : null}
     </div>
   );
 }
