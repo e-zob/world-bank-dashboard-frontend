@@ -1,5 +1,5 @@
 export async function postUserInfo(username, password, urlPath) {
-  const response = await fetch(`http://localhost:8080/${urlPath}`, {
+  const response = await fetch(`http://process.env.REACT_APP_API_URL/${urlPath}`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -15,7 +15,7 @@ export async function postUserInfo(username, password, urlPath) {
 }
 
 export async function logUserOut() {
-  const response = await fetch(`http://localhost:8080/sessions`, {
+  const response = await fetch(`http://process.env.REACT_APP_API_URL/sessions`, {
     method: "DELETE",
     credentials: "include",
     headers: {
@@ -26,7 +26,7 @@ export async function logUserOut() {
 }
 
 export async function deleteUserInfo(username) {
-  const response = await fetch(`http://localhost:8080/users`, {
+  const response = await fetch(`http://process.env.REACT_APP_API_URL/users`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
