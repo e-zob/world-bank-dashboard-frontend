@@ -87,6 +87,7 @@ export default function SearchBar(props) {
     setCountryTwo(e.value);
   }
   //console.log(countries, indicator, years);
+
   return (
     <Container>
       <h2>Search</h2>
